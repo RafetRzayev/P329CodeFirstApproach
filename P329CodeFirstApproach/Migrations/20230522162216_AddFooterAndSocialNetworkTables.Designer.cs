@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P329CodeFirstApproach.DataAccessLayer;
 
@@ -10,9 +11,10 @@ using P329CodeFirstApproach.DataAccessLayer;
 namespace P329CodeFirstApproach.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230522162216_AddFooterAndSocialNetworkTables")]
+    partial class AddFooterAndSocialNetworkTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,27 +38,6 @@ namespace P329CodeFirstApproach.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Footer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CardImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Footer");
                 });
 
             modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Group", b =>
@@ -147,28 +128,6 @@ namespace P329CodeFirstApproach.Migrations
                     b.ToTable("SliderImages");
                 });
 
-            modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.SocialNetwork", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FooterId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FooterId");
-
-                    b.ToTable("SocialNetworks");
-                });
-
             modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -202,17 +161,6 @@ namespace P329CodeFirstApproach.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.SocialNetwork", b =>
-                {
-                    b.HasOne("P329CodeFirstApproach.DataAccessLayer.Entities.Footer", "Footer")
-                        .WithMany("SocialNetworks")
-                        .HasForeignKey("FooterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Footer");
-                });
-
             modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Student", b =>
                 {
                     b.HasOne("P329CodeFirstApproach.DataAccessLayer.Entities.Group", "Group")
@@ -227,11 +175,6 @@ namespace P329CodeFirstApproach.Migrations
             modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Footer", b =>
-                {
-                    b.Navigation("SocialNetworks");
                 });
 
             modelBuilder.Entity("P329CodeFirstApproach.DataAccessLayer.Entities.Group", b =>

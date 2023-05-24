@@ -16,5 +16,7 @@ namespace P329CodeFirstApproach.DataAccessLayer
         public DbSet<SliderBg> SliderBgs { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Footer> Footer { get; set; }
+        public DbSet<SocialNetwork> SocialNetworks { get; set; }
     }
 }

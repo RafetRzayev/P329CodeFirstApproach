@@ -32,5 +32,14 @@ namespace P329CodeFirstApproach.Controllers
 
             return View(viewModel);
         }
+
+        public IActionResult Search(string searchedProduct)
+        {
+            if (string.IsNullOrEmpty(searchedProduct)) return NoContent();
+
+            var products = _dbContext.Products.Where(x => x.Name.Contains(searchedProduct)).ToList();
+
+            return PartialView("_SearchedProductPartial", products);
+        }
     }
 }

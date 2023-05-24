@@ -1,0 +1,18 @@
+﻿@using P329CodeFirstApproach.DataAccessLayer.Entities;
+@model Footer 
+
+<div class="row py-2">
+    <div class=" col-lg-4 text-center text-lg-left">
+        <p class="text-black-50">Powered by <a class="author text-muted"
+                href="https://www.bakhtiyar.az">@Model.CreatedBy</a> 2020</p>
+    </div>
+    <div class=" col-lg-4 text-center">
+        <img src="~/img/@Model.CardImageUrl" class="fluid" alt="">
+    </div>
+    <div class=" col-lg-4 text-center text-lg-right mt-3 mt-lg-0">
+        @foreach (var item in Model.SocialNetworks)
+        {
+           <a class="text-black-50" href="https://www.facebook.com/shamilzada.bakhtiyar">@item.Name</a>
+        }
+    </div>
+</div>
