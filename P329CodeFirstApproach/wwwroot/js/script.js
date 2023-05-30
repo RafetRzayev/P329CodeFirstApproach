@@ -21,6 +21,22 @@ $(document).ready(function () {
         });
     })
 
+    $(document).on('click', '#AddToBasket', function () {
+
+        var productId = $(this).prev().val();
+        $.ajax({
+            url: "/home/addtobasket?id=" + productId,
+            type: "GET",
+            success: function (response) {
+                $("#basketPartial").empty();
+                $("#basketPartial").append(response);
+            },
+            error: function (xhr) {
+
+            }
+        });
+    })
+
     $(document).on('keyup', '#input-search', function () {
         var searchedProduct = $(this).val();
         $.ajax({

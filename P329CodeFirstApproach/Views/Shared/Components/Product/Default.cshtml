@@ -14,7 +14,8 @@
                 <h6>@item.Name</h6>
             </div>
             <div class="price">
-                <span class="text-black-50">Add to cart</span>
+                <input type="hidden" value="@item.Id" id="productId"/>
+                <span class="text-black-50" id="AddToBasket">Add to cart</span>
                 <span class="text-black-50">$@item.Price</span>
             </div>
         </div>

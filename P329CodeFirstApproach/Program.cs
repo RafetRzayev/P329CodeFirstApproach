@@ -10,6 +10,11 @@ namespace P329CodeFirstApproach
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddMvc();
+            builder.Services.AddSession(option =>
+            {
+                option.Cookie.Name = "MySession";
+                option.IdleTimeout = TimeSpan.FromSeconds(40);
+            });
 
             var connectinString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -21,6 +26,7 @@ namespace P329CodeFirstApproach
             var app = builder.Build();
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

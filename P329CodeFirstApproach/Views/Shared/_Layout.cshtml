@@ -18,19 +18,17 @@
 <body>
 
     <!-- HEADER START -->
-
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <nav
-                        class="navbar navbar-expand-lg d-flex d-lg-block justify-content-between d-xl-flex navbar-light py-3 py-lg-0">
+                    <nav class="navbar navbar-expand-lg d-flex d-lg-block justify-content-between d-xl-flex navbar-light py-3 py-lg-0">
                         <a class="navbar-brand" href="#">
                             <img src="~/img/logo.png" alt="" id="logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation" id="mobile-navbar-show">
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation" id="mobile-navbar-show">
                             <span class="navbar-toggler-icon" style="font-size: 12px;"></span>
                         </button>
 
@@ -160,9 +158,10 @@
                                 <li class="nav-item my-auto shop-cart">
                                     <i class="fas fa-shopping-bag"></i>
                                     <sup class="rounded-circle">0</sup>
-                                    <span>CART ($0)</span>
-                                    <ul class="list-unstyled py-3">
-                                        <li class="">No products in the cart.</li>
+                                    <a asp-controller="home" asp-action="basket">
+                                        <span>CART ($0)</span>
+                                    </a>
+                                    <ul class="list-unstyled py-3" id="basketPartial">
                                     </ul>
                                 </li>
                             </ul>
@@ -188,21 +187,24 @@
                     </ul>
                     <li><a href="#">Shop <i class="fas fa-caret-right fa-sm"></i></a></a></li>
                     <ul class="list-unstyled py-3">
-                        <li class=""><a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
@@ -212,21 +214,24 @@
                     </ul>
                     <li><a href="#">Portfolio <i class="fas fa-caret-right fa-sm"></i></a></a></li>
                     <ul class="list-unstyled py-3">
-                        <li class=""><a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
@@ -236,21 +241,24 @@
                     </ul>
                     <li><a href="#">Blog <i class="fas fa-caret-right fa-sm"></i></a></a></li>
                     <ul class="list-unstyled py-3">
-                        <li class=""><a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
@@ -260,21 +268,24 @@
                     </ul>
                     <li><a href="#">Elements <i class="fas fa-caret-right fa-sm"></i></a></a></li>
                     <ul class="list-unstyled py-3">
-                        <li class=""><a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">PRODUCT TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP PAGES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
                             <li class=""><a class="px-3" href="">Product Types 2</a></li>
                             <li class=""><a class="px-3" href="">Product Types 3</a></li>
                         </ul>
-                        <li class=""><a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
+                        <li class="">
+                            <a class="px-3" href="#">SHOP TYPES <i class="fas fa-caret-right fa-sm"></i></a>
                         </li>
                         <ul class="list-unstyled py-3">
                             <li class=""><a class="px-3" href="">Product Types 1</a></li>
@@ -288,6 +299,7 @@
 
     </header>
 
+    @*@await Component.InvokeAsync("Header")*@
     <!-- HEADER END -->
         @RenderBody()
       <!-- FOOTER START -->
