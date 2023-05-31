@@ -1,0 +1,23 @@
+﻿@model Category
+<div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Delete category</h4>
+                <form class="forms-sample" method="post" asp-action="DeleteCategory">
+                    <div class="form-group">
+                        <label asp-for="Name">Name</label>
+                        <input asp-for="Name" class="form-control" id="exampleInputUsername1" placeholder="Username">
+                        <span asp-validation-for="Name"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Id">Description</label>
+                        <input asp-for="Id" class="form-control" placeholder="Description">
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light" asp-controller="index">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

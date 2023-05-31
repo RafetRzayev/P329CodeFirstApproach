@@ -32,6 +32,10 @@ namespace P329CodeFirstApproach
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                            name: "areas",
+                            pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute("default","{controller=home}/{action=index}/{id?}"); 
             });
 
