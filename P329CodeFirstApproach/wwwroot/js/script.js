@@ -21,6 +21,22 @@ $(document).ready(function () {
         });
     })
 
+
+    $(document).on('click', '#deleteCategory', function () {
+        var categoryId = $(this).prev().val();
+
+        $.ajax({
+            url: "/adminpanel/category/delete/" + categoryId,
+            type: "POST",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (xhr) {
+
+            }
+        });
+    })
+
     $(document).on('click', '#AddToBasket', function () {
 
         var productId = $(this).prev().val();

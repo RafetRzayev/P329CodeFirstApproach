@@ -44,7 +44,7 @@ namespace P329CodeFirstApproach.Areas.AdminPanel.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return RedirectToAction(nameof(Create));
             }
 
             var isExist = await _dbContext.Categories.AnyAsync(x => x.Name.ToLower().Equals(category.Name.ToLower()));
@@ -75,7 +75,7 @@ namespace P329CodeFirstApproach.Areas.AdminPanel.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
         public async Task<IActionResult> DeleteCategory(int? id)
         {
             if (id == null) return NotFound();
@@ -85,6 +85,43 @@ namespace P329CodeFirstApproach.Areas.AdminPanel.Controllers
             if (category == null) return NotFound();
 
             _dbContext.Categories.Remove(category);
+
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var category = await _dbContext.Categories.FindAsync(id);
+
+            if (category == null) return NotFound();
+
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id, Category category)
+        {
+            if (id == null) return NotFound();
+
+            if (id != category.Id) return BadRequest();
+
+            var existCategory = await _dbContext.Categories.FindAsync(id);
+
+            var existName = await _dbContext.Categories.AnyAsync(x => x.Name.ToLower().Equals(category.Name.ToLower()) && x.Id != id);
+
+            if (existName)
+            {
+                ModelState.AddModelError("Name", "Bu adda kateqoriya movcuddur");
+                return View();
+            }
+
+            existCategory.Name = category.Name;
+            existCategory.Description = category.Description;
 
             await _dbContext.SaveChangesAsync();
 
