@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using P329CodeFirstApproach.DataAccessLayer.Entities;
 
 namespace P329CodeFirstApproach.DataAccessLayer
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -18,5 +19,7 @@ namespace P329CodeFirstApproach.DataAccessLayer
         public DbSet<Product> Products { get; set; }
         public DbSet<Footer> Footer { get; set; }
         public DbSet<SocialNetwork> SocialNetworks { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }    
+        public DbSet<TestEntity> TestEntities { get; set; }
     }
 }

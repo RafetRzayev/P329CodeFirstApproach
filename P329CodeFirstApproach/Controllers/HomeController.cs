@@ -23,6 +23,16 @@ namespace P329CodeFirstApproach.Controllers
             Response.Cookies.Append("a", "test1",new CookieOptions { Expires = DateTimeOffset.Now.AddDays(1)});
             Response.Cookies.Append("b", "test2");
 
+            if (HttpContext.Session.GetInt32("IsVisited") == null)
+            {
+                HttpContext.Session.SetInt32("IsVisited", 1);
+                var visitor = _dbContext.Visitors.FirstOrDefault();
+                visitor.Count++;
+                _dbContext.SaveChanges();
+            }
+
+            
+
             var sliderImage = _dbContext.SliderImages.FirstOrDefault();
             var sliderBgs = _dbContext.SliderBgs.ToList();
             var categories = _dbContext.Categories.ToList();

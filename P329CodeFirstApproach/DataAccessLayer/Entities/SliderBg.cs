@@ -8,6 +8,9 @@ namespace P329CodeFirstApproach.DataAccessLayer.Entities
         public string? ImageUrl { get; set; }
 
         [NotMapped]
-        public IFormFile Photo { get; set; }
+        public IFormFile? Photo { get; set; }
+
+        [NotMapped]
+        public IFormFile[] Photos { get; set; }
     }
 }

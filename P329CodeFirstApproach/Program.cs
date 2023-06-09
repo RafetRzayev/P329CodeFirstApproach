@@ -1,12 +1,14 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using P329CodeFirstApproach.Areas.AdminPanel.Data;
+using P329CodeFirstApproach.Data;
 using P329CodeFirstApproach.DataAccessLayer;
 
 namespace P329CodeFirstApproach
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,7 @@ namespace P329CodeFirstApproach
             builder.Services.AddSession(option =>
             {
                 option.Cookie.Name = "MySession";
-                option.IdleTimeout = TimeSpan.FromSeconds(40);
+                option.IdleTimeout = TimeSpan.FromDays(1);
             });
 
             Constants.ImagePath = Path.Combine(builder.Environment.WebRootPath, "img");
@@ -25,16 +27,42 @@ namespace P329CodeFirstApproach
 
             builder.Services.AddDbContext<AppDbContext>(builder =>
             {
-                builder.UseSqlServer(connectinString);
+                builder.UseSqlServer(connectinString,builder=>builder.MigrationsAssembly("P329CodeFirstApproach"));
+                
             });
 
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.SignIn.RequireConfirmedEmail= false;
+
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders().AddErrorDescriber<LocalizeIdentityError>();
+
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                var dataInitializer = new DataInitializer(userManager, roleManager, dbContext);
+                await dataInitializer.SeedData();
+            };
 
             app.UseStaticFiles();
             app.UseSession();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -44,7 +72,7 @@ namespace P329CodeFirstApproach
                 endpoints.MapControllerRoute("default","{controller=home}/{action=index}/{id?}"); 
             });
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

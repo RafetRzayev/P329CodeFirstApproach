@@ -4,7 +4,7 @@
 
 namespace P329CodeFirstApproach.Migrations
 {
-    public partial class AddFooterAndSocialNetworkTables : Migration
+    public partial class TestAutoMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

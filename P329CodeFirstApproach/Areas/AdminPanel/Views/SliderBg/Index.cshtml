@@ -18,10 +18,13 @@
                             <tr>
                                 <td><img src="~/img/@item.ImageUrl" style="width:100px;height:100px;" /></td>
                                 <td>
-                                    <a class="btn btn-success" asp-action="details" asp-route-id="@item.Id">Details</a>
-                                 <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id">Delete</a>
+                                 <a class="btn btn-success" asp-action="details" asp-route-id="@item.Id">Details</a>
+                                 <form method="post" asp-action="delete">
+                                        <input type="hidden" name="id" value="@item.Id"/>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                 </form>
                               
-                                    <a class="btn btn-warning" asp-action="update" asp-route-id="@item.Id">Update</a>
+                                <a class="btn btn-warning" asp-action="update" asp-route-id="@item.Id">Update</a>
                                 </td>
                             </tr>
                         }
