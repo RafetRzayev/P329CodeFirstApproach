@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using P329CodeFirstApproach.Data;
 using P329CodeFirstApproach.DataAccessLayer;
 using P329CodeFirstApproach.DataAccessLayer.Entities;
+using P329CodeFirstApproach.Services;
 using P329CodeFirstApproach.SessionExtensions;
 using P329CodeFirstApproach.ViewModels;
 
@@ -11,10 +13,11 @@ namespace P329CodeFirstApproach.Controllers
     public class HomeController : Controller
     {
         private readonly AppDbContext _dbContext;
-
-        public HomeController(AppDbContext appDbContext)
+        private readonly IMailService _mailService;
+        public HomeController(AppDbContext appDbContext, IMailService mailService)
         {
             _dbContext = appDbContext;
+            _mailService = mailService;
         }
 
         public IActionResult Index()

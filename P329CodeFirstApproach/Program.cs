@@ -1,8 +1,11 @@
+using MailKit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using P329CodeFirstApproach.Areas.AdminPanel.Data;
 using P329CodeFirstApproach.Data;
 using P329CodeFirstApproach.DataAccessLayer;
+using P329CodeFirstApproach.Services;
+using IMailService = P329CodeFirstApproach.Services.IMailService;
 
 namespace P329CodeFirstApproach
 {
@@ -30,6 +33,10 @@ namespace P329CodeFirstApproach
                 builder.UseSqlServer(connectinString,builder=>builder.MigrationsAssembly("P329CodeFirstApproach"));
                 
             });
+
+            builder.Services.Configure<MailSetting>(builder.Configuration.GetSection("MailSettings"));
+
+            builder.Services.AddTransient<IMailService, GmailManager>();
 
             builder.Services.AddIdentity<User, IdentityRole>(options =>
             {

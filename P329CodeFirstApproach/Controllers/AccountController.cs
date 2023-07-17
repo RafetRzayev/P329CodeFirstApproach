@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using P329CodeFirstApproach.Data;
 using P329CodeFirstApproach.DataAccessLayer;
+using P329CodeFirstApproach.Services;
 using P329CodeFirstApproach.ViewModels;
 
 namespace P329CodeFirstApproach.Controllers
@@ -11,11 +13,14 @@ namespace P329CodeFirstApproach.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        private readonly IMailService _mailService;
+
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager, IMailService mailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _mailService = mailService;
         }
 
         public IActionResult Register()
@@ -48,27 +53,27 @@ namespace P329CodeFirstApproach.Controllers
                 return View();
             }
 
-            var roleResult = await _roleManager.CreateAsync(new IdentityRole
-            {
-                Name = "Admin"
-            });
+            //var roleResult = await _roleManager.CreateAsync(new IdentityRole
+            //{
+            //    Name = "Admin"
+            //});
 
-            if (!roleResult.Succeeded)
-            {
-                foreach (var item in roleResult.Errors)
-                {
-                    ModelState.AddModelError("", item.Description);
-                }
+            //if (!roleResult.Succeeded)
+            //{
+            //    foreach (var item in roleResult.Errors)
+            //    {
+            //        ModelState.AddModelError("", item.Description);
+            //    }
 
-                return View();
-            }
+            //    return View();
+            //}
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
 
-                await _userManager.AddToRoleAsync(user, "Admin");
+                //await _userManager.AddToRoleAsync(user, "Admin");
 
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -129,6 +134,8 @@ namespace P329CodeFirstApproach.Controllers
                 return View();
             }
 
+            if (string.IsNullOrEmpty(model.ReturnUrl))
+                return RedirectToAction("Index", "Home");
 
             return Redirect(model.ReturnUrl);
         }
@@ -174,6 +181,85 @@ namespace P329CodeFirstApproach.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();  
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Bu email-nen istifadece qeydiyyatdan kecmeyib");
+                return View();
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var resetLink = Url.Action(nameof(ResetPassword), "Account", new { email = model.Email, token = token }, Request.Scheme, Request.Host.ToString());
+
+            var requestMail = new RequestEmail
+            {
+                ToEmail = model.Email,
+                Subject = "Reset password",
+                Body = resetLink
+            };
+
+            await _mailService.SendEmailAsync(requestMail);
+            
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ResetPassword(string email, string token)
+        {
+            return View(new ResetPasswordViewModel
+            {
+                Email=email,
+                Token=token
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Bele email yoxdu");
+                return View();
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                foreach (var item in result.Errors)
+                {
+                    ModelState.AddModelError("", item.Description);
+                }
+
+                return View();
+            }
+
+            return RedirectToAction(nameof(Login));
         }
     }
 }
